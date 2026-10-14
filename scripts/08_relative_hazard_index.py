@@ -1,9 +1,9 @@
-
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
-import matplotlib.pyplot as plt
+from rasterio.plot import plotting_extent
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "processed"
@@ -22,44 +22,37 @@ transform = None
 
 for name, path in files.items():
     with rasterio.open(path) as src:
-        arrays[name] = src.read(1, masked=True).astype(
-            "float32"
-        ).filled(np.nan)
+        arrays[name] = src.read(1, masked=True).astype("float32").filled(np.nan)
 
         if profile is None:
             profile = src.profile.copy()
             transform = src.transform
+        elif (src.profile["width"], src.profile["height"]) != (profile["width"], profile["height"]):
+            raise ValueError(f"Raster dimensions for {name} do not match the base raster.")
 
 # Restrict analysis to pixels valid in all scenarios
-common_mask = np.logical_and.reduce([
-    np.isfinite(arr) for arr in arrays.values()
-])
+common_mask = np.logical_and.reduce([np.isfinite(arr) for arr in arrays.values()])
 
 if not common_mask.any():
-    raise ValueError("No common valid pixels found.")
+    raise ValueError("No common valid pixels found across scenarios.")
 
-pooled_values = np.concatenate([
-    arr[common_mask] for arr in arrays.values()
-])
+pooled_values = np.concatenate([arr[common_mask] for arr in arrays.values()])
 
 # Shared robust scaling limits across all scenarios
 lower, upper = np.percentile(pooled_values, [2, 98])
 
 if upper <= lower:
-    raise ValueError("Invalid scaling limits.")
+    raise ValueError(f"Invalid scaling limits: lower={lower}, upper={upper}")
 
 indices = {}
 
 for name, arr in arrays.items():
     index = np.full(arr.shape, np.nan, dtype=np.float32)
-
     scaled = (arr[common_mask] - lower) / (upper - lower)
-    index[common_mask] = np.clip(scaled, 0, 1)
-
+    index[common_mask] = np.clip(scaled, 0.0, 1.0)
     indices[name] = index
 
     output = DATA / f"relative_hazard_{name.replace('-', '')}.tif"
-
     out_profile = profile.copy()
     out_profile.update(
         dtype="float32",
@@ -76,14 +69,11 @@ for name, arr in arrays.items():
         f"median index={np.nanmedian(index):.3f}"
     )
 
-# Geographic coordinate extent
-height, width = next(iter(indices.values())).shape
-left = transform.c
-top = transform.f
-right = left + width * transform.a
-bottom = top + height * transform.e
+# Compute bounds safely for plotting
+sample_arr = next(iter(indices.values()))
+extent = plotting_extent(sample_arr, transform)
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 6))
+fig, axes = plt.subplots(1, 3, figsize=(16, 6), sharey=True)
 
 for ax, (name, index) in zip(axes, indices.items()):
     im = ax.imshow(
@@ -91,12 +81,13 @@ for ax, (name, index) in zip(axes, indices.items()):
         cmap="YlOrRd",
         vmin=0,
         vmax=1,
-        extent=[left, right, bottom, top],
+        extent=extent,
         origin="upper",
     )
-    ax.set_title(f"{name} scenario")
+    ax.set_title(f"{name} Scenario")
     ax.set_xlabel("Longitude")
-    ax.set_ylabel("Latitude")
+
+axes[0].set_ylabel("Latitude")
 
 fig.colorbar(
     im,
@@ -104,10 +95,10 @@ fig.colorbar(
     orientation="horizontal",
     fraction=0.06,
     pad=0.14,
-    label="Relative hazard index (0–1; not probability or depth)",
+    label="Relative hazard index (0–1; normalized across all return periods)",
 )
 
-fig.suptitle("Relative Flood-Hazard Index — Ernakulam Study Extent")
+fig.suptitle("Relative Flood-Hazard Index — Ernakulam Study Extent", fontsize=14)
 
 plt.savefig(
     MAPS / "relative_hazard_index.png",
@@ -117,5 +108,4 @@ plt.savefig(
 plt.close()
 
 print("\nSaved relative hazard rasters and map.")
-print("Scaling limits:", lower, "to", upper)
-print("Note: This is a relative index, not a calibrated flood probability.")
+print(f"Scaling limits: {lower:.3f} to {upper:.3f}")
