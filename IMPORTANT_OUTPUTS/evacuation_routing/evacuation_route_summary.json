@@ -1,0 +1,14 @@
+{
+  "start": {
+    "latitude": 9.9816,
+    "longitude": 76.2999
+  },
+  "destination": {
+    "latitude": 9.9674,
+    "longitude": 76.242
+  },
+  "route_nodes": 148,
+  "distance_km": 14.544,
+  "method": "Shortest distance using road-edge lengths",
+  "limitation": "Not yet optimized for flood safety"
+}

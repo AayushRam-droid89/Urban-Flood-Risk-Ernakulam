@@ -1,0 +1,13 @@
+scenario,class,pixel_count,percent_of_valid_pixels
+10year,Low,29718,51.58
+10year,Moderate,16961,29.44
+10year,High,8389,14.56
+10year,Very High,2544,4.42
+25year,Low,27307,47.4
+25year,Moderate,16466,28.58
+25year,High,9612,16.68
+25year,Very High,4227,7.34
+50year,Low,24282,42.15
+50year,Moderate,16482,28.61
+50year,High,11360,19.72
+50year,Very High,5488,9.53

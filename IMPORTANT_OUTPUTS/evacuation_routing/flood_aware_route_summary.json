@@ -1,0 +1,41 @@
+{
+  "project": "Urban Flood Risk and Emergency Evacuation Planning",
+  "study_area": "Ernakulam, Kerala",
+  "start_node": "4334997194",
+  "end_node": "430768919",
+  "hazard_raster": "data\\processed\\relative_hazard_10year.tif",
+  "hazard_penalty": 4.0,
+  "unknown_data_penalty": 1.0,
+  "road_network": {
+    "nodes": 74152,
+    "edges": 88910
+  },
+  "hazard_data_coverage": {
+    "valid_edges": 8226,
+    "unknown_edges": 80684,
+    "valid_coverage_percent": 9.25
+  },
+  "shortest_distance_route": {
+    "distance_km": 14.385,
+    "edge_count": 145,
+    "known_hazard_edges": 0,
+    "unknown_hazard_edges": 145,
+    "known_hazard_coverage_percent": 0.0,
+    "mean_hazard_on_known_edges": null
+  },
+  "experimental_hazard_aware_route": {
+    "distance_km": 14.595,
+    "edge_count": 123,
+    "known_hazard_edges": 10,
+    "unknown_hazard_edges": 113,
+    "known_hazard_coverage_percent": 8.13,
+    "mean_hazard_on_known_edges": 0.085
+  },
+  "limitations": [
+    "Unknown raster samples are not evidence of low flood risk.",
+    "The unknown-data penalty is a modelling assumption.",
+    "The relative hazard index is not a calibrated flood depth.",
+    "The start and end nodes are illustrative, not verified shelters.",
+    "This comparison does not certify a route as safe during a flood."
+  ]
+}
