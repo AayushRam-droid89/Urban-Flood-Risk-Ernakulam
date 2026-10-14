@@ -3,7 +3,7 @@ import rasterio
 import geopandas as gpd
 import pandas as pd
 
-ROOT = Path(r"D:\Flood_Project_SDG")
+ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 
 RASTERS = [
