@@ -98,9 +98,10 @@ rain = rain[
     & rain["Latitude"].between(study_bounds.bottom, study_bounds.top)
 ].copy()
 
+
 rain["Data Acquisition Time"] = pd.to_datetime(
     rain["Data Acquisition Time"],
-    dayfirst=True,
+    format="mixed",
     errors="coerce"
 )
 
