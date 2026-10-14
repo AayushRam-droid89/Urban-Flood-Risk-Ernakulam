@@ -1,0 +1,35 @@
+{
+  "start_coordinates_lat_lon": [
+    9.9816,
+    76.2999
+  ],
+  "end_coordinates_lat_lon": [
+    9.9674,
+    76.242
+  ],
+  "hazard_raster": "D:\\Flood_Project_SDG\\data\\processed\\relative_hazard_50year.tif",
+  "hazard_penalty_factor": 4.0,
+  "hazard_sampling_method": "Road-edge midpoint",
+  "unknown_edge_hazard_assumption": 0.5,
+  "valid_edge_samples": 16536,
+  "unknown_edge_samples": 159567,
+  "shortest_route": {
+    "distance_km": 14.544,
+    "mean_relative_hazard": 0.5,
+    "road_segments": 147
+  },
+  "flood_aware_route": {
+    "distance_km": 14.754,
+    "mean_relative_hazard": 0.4708,
+    "road_segments": 125
+  },
+  "extra_distance_km": 0.21,
+  "extra_distance_percent": 1.44,
+  "limitations": [
+    "Relative hazard is not calibrated flood depth or probability.",
+    "Hazard is sampled at road-edge midpoints.",
+    "Missing hazard values use a neutral assumed value of 0.5.",
+    "The route is not validated as safe during an actual flood.",
+    "Start and end coordinates are illustrative, not verified shelters."
+  ]
+}

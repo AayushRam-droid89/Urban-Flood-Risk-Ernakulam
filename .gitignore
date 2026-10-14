@@ -1,0 +1,14 @@
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Temporary caches
+cache/
+
+# Keep raw and processed raster datasets local initially.
+# Share them separately with teammates or use Git LFS if needed.
+data/raw/
+data/processed/
