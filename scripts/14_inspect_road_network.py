@@ -3,7 +3,7 @@ from pathlib import Path
 import geopandas as gpd
 import networkx as nx
 
-ROOT = Path(r"D:\Flood_Project_SDG")
+ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 
 graph_path = RAW / "ernakulam_roads.graphml"

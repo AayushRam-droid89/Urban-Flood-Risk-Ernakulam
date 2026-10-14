@@ -6,7 +6,7 @@ import rasterio
 from rasterio.mask import mask
 from shapely.geometry import box, mapping
 
-ROOT = Path(r"D:\Flood_Project_SDG")
+ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "processed"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -98,9 +98,10 @@ rain = rain[
     & rain["Latitude"].between(study_bounds.bottom, study_bounds.top)
 ].copy()
 
+
 rain["Data Acquisition Time"] = pd.to_datetime(
     rain["Data Acquisition Time"],
-    dayfirst=True,
+    format="mixed",
     errors="coerce"
 )
 

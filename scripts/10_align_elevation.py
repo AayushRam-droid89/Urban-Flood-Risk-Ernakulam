@@ -6,7 +6,7 @@ import rasterio
 from rasterio.warp import reproject, Resampling
 import matplotlib.pyplot as plt
 
-ROOT = Path(r"D:\Flood_Project_SDG")
+ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 PROCESSED = ROOT / "data" / "processed"
 MAPS = ROOT / "outputs" / "maps"

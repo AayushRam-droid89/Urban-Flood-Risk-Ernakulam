@@ -5,7 +5,7 @@ import numpy as np
 import rasterio
 import matplotlib.pyplot as plt
 
-ROOT = Path(r"D:\Flood_Project_SDG")
+ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "processed"
 MAPS = ROOT / "outputs" / "maps"
 MAPS.mkdir(parents=True, exist_ok=True)
