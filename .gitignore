@@ -10,5 +10,9 @@ cache/
 
 # Keep raw and processed raster datasets local initially.
 # Share them separately with teammates or use Git LFS if needed.
-data/raw/
-data/processed/
+# Ignore temporary and generated cache files
+cache/
+
+# Share raw and processed datasets on GitHub
+!data/raw/
+!data/processed/
