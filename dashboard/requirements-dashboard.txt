@@ -1,4 +1,8 @@
 streamlit>=1.32.0
 pandas>=2.0.0
-plotly>=5.18.0
+# plotly>=6 is required for the maplibre map traces (go.Scattermap) used by the
+# evacuation-route map. On older Plotly builds the dashboard falls back to a
+# plain longitude/latitude plot instead.
+plotly>=6.0.0
+numpy>=1.24.0
 Pillow>=10.0.0
