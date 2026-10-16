@@ -36,6 +36,14 @@ Install dependencies:
 python -m pip install -r requirements.txt
 ```
 
+How to Run the App:
+```
+cd Urban-Flood-Risk-Ernakulam
+python -m pip install -r dashboard/requirements-
+python -m streamlit run dashboard/app.py
+```
+to test it : localhost:8501
+
 Run scripts from the project root in numerical order where applicable.
 
 ## Important Limitations
