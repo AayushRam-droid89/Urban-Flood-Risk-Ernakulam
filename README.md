@@ -22,6 +22,7 @@ This project analyzes flood-hazard scenarios and elevation data to support urban
 - `data/raw/` — Original datasets
 - `data/processed/` — Processed raster layers and CSV summaries
 - `scripts/` — Python scripts for analysis
+- `dashboard/` — Streamlit dashboard that displays the existing outputs
 - `outputs/maps/` — Generated maps
 - `outputs/` — Route outputs and summaries
 - `requirements.txt` — Python dependencies
@@ -37,12 +38,19 @@ python -m pip install -r requirements.txt
 ```
 
 How to Run the App:
-```
-cd Urban-Flood-Risk-Ernakulam
-python -m pip install -r dashboard/requirements-
+
+```bash
+python -m pip install -r dashboard/requirements-dashboard.txt
 python -m streamlit run dashboard/app.py
 ```
-to test it : localhost:8501
+
+Then open http://localhost:8501 in a browser.
+
+The dashboard only reads existing project outputs (processed rasters, summary CSVs,
+route GeoJSON files and generated PNG figures); it does not run any analysis script.
+The sidebar scenario selector switches between the 10-, 25- and 50-year hazard
+scenarios. Sections can be linked directly, e.g.
+`http://localhost:8501/?section=Elevation`.
 
 Run scripts from the project root in numerical order where applicable.
 
